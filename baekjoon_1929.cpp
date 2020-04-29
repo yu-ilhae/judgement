@@ -1,24 +1,32 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
-bool isComposite(const int& n);
-using namespace std;
-int main() {
-	int in_min, in_max;
 
-	cin >> in_min >> in_max;
-	for (int i = in_min; i <= in_max; i++) {
-		if (isComposite(i) == true) {
-			cout << i << endl;
+using namespace std;
+
+int main(void) {
+	int start, end;
+	int* num;
+	int k = 0;
+	
+	cin >> start >> end;
+	num = new int[end-start + 1];
+	
+	for (int i = 0; i < end - start + 1; i++)
+		num[i] = start+i;
+
+	if (num[0] == 1) num[0] = 0;
+
+	for (int i = 2; i <= sqrt(end); i++) {
+		for (int j = 0; j < end - start + 1; j++){
+			if (num[j] == 0) continue;
+			else if (num[j] % i == 0 && num[j] > i) num[j] = 0;
 		}
 	}
 
+	for (int i = 0; i < end - start + 1; i++)
+		if (num[i] != 0) cout << num[i] << "\n";
+
+	
+
 	return 0;
-}
-bool isComposite(const int & n) {
-	if (n == 1) return false;
-	int check_point = (int)ceil(sqrt(n));
-	for (int i = 2; i <= check_point; i++) {
-		if (n % i == 0 && i <= check_point) return false;
-	}
-	return true;
 }
